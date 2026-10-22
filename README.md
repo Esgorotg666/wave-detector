@@ -1,30 +1,31 @@
-# Wave Detector
+# Wave Detector (Improved)
 
-A simple Progressive Web App (PWA) that monitors your phone's sensors for unusual activity while the app is open.
+PWA that monitors motion, heading shifts, and audio spectrum while open.
 
-## What it monitors (foreground only)
+## New / Improved Features
 
-- **Motion / vibration**: Uses DeviceMotion to detect acceleration deviations from gravity.
-- **Magnetic / heading shifts**: Uses DeviceOrientation (including `webkitCompassHeading` on iOS) to watch for sudden compass changes.
-- **Audio spectrum**: Uses the microphone + Web Audio API to watch low-frequency and high-frequency energy (possible ultrasonic or pulsing sound).
+- **10-second baseline calibration** — sit still and quiet, then thresholds are relative to your environment.
+- **Smoothing** — exponential moving average so readings are less jumpy.
+- **Adjustable thresholds** — live sliders for motion, heading, low audio, high audio.
+- **Alert cooldown** — prevents notification spam (4 s minimum between alerts).
+- **Color-coded values** — green → yellow → red as values approach/exceed thresholds.
+- **Better spectrum drawing** — higher-DPI canvas, clearer low/mid/high coloring.
+- **Exportable log** — download the event log as a text file.
+- **Improved audio capture** — noise suppression and AGC disabled for rawer data.
 
-## Limitations (important)
+## Limits (still true)
 
-- **No true background monitoring** on iOS. Apple does not allow web apps to continuously access sensors when the screen is off or the app is backgrounded.
-- The web DeviceOrientation API does **not** give raw magnetometer values in µT the way native apps do. It is mainly heading data.
-- It cannot detect electric fields, radio-frequency energy, or sophisticated directed-energy devices.
-- Best used as a quick local check for vibration or strong nearby magnetic/audio sources.
+- Foreground only. No continuous background monitoring on iOS.
+- Heading data only (not raw magnetometer µT).
+- Cannot detect electric fields or RF.
+- Best for spotting vibration, sudden compass jumps, or unusual audio energy nearby.
 
-## How to use
+## Usage
 
-1. Open the site on your iPhone in Safari.
-2. Tap Share → Add to Home Screen to install as a PWA.
-3. Open the installed app and tap **Start Monitoring**.
-4. Grant motion and microphone permissions when asked.
-5. Keep the app open and the screen on. Alerts appear on-screen and as notifications if permission is granted.
+1. Host on GitHub Pages or any static host.
+2. Open in Safari → Add to Home Screen.
+3. Tap **Calibrate Baseline** and stay still/quiet for 10 seconds.
+4. Adjust sliders if needed, then **Start Monitoring**.
+5. Keep the app open and screen on.
 
-## Deploy
-
-This is a static site. You can host it on GitHub Pages, Vercel, or any static host.
-
-**Disclaimer**: This tool is for personal experimentation only. Persistent unexplained physical sensations should be discussed with a doctor.
+**Disclaimer**: Experimental tool only. Persistent unexplained sensations should be checked by a doctor.
